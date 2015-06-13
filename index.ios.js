@@ -10,6 +10,7 @@
 var React = require('react-native');
 var DeviceEventEmitter = React.DeviceEventEmitter;
 var Estimote = require('react-native-estimote');
+var request = require('superagent');
 
 //Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
 //Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
@@ -34,25 +35,27 @@ var fact0ryx_ios = React.createClass({
     console.log("didRangeNearable", JSON.stringify(data));
   },
   didEnterIdentifierRegion: function(data){
+
     console.log("didEnterIdentifierRegion", JSON.stringify(data));
 
-  console.log('bro')
-
-    var hue = new jsHue();
-    var user = hue.bridge('10.1.10.26').user('newdeveloper');
-    user.setLightState(1, { on: true }, function(){
-      console.log('light on');
-    });
+    request
+      .post('/10.1.10.26/api/newdeveloper/lights/1/state')
+      .send({on: true})
+      .end(function(err, res){
+        console.log('light ON');
+      });
 
   },
   didExitIdentifierRegion: function(data){
+
     console.log("didExitIdentifierRegion", JSON.stringify(data));
 
-    var hue = new jsHue();
-    var user = hue.bridge('10.1.10.26').user('newdeveloper');
-    user.setLightState(1, { on: false }, function(){
-      console.log('light off');
-    });
+    request
+      .post('/10.1.10.26/api/newdeveloper/lights/1/state')
+      .send({on: false})
+      .end(function(err, res){
+        console.log('light OFF');
+      });
 
   },
   didEnterTypeRegion: function(data){

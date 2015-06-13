@@ -8,5 +8,8 @@
   "dependencies": {
     "react-native": "^0.4.4",
     "react-native-estimote": "^0.0.3"
+  },
+  "devDependencies": {
+    "superagent": "^1.2.0"
   }
 }
