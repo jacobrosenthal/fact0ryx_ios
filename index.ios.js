@@ -12,6 +12,16 @@ var DeviceEventEmitter = React.DeviceEventEmitter;
 var Estimote = require('react-native-estimote');
 var request = require('superagent');
 
+var AppRegistry = React.AppRegistry;
+var StyleSheet = React.StyleSheet;
+var Text = React.Text;
+var View = React.View;
+var TouchableHighlight = React.TouchableHighlight;
+var PushNotificationIOS = React.PushNotificationIOS;
+
+PushNotificationIOS.requestPermissions();
+
+
 //Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
 //Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
 //Estimote.startRangingForIdentifier("4ba718239b91a8b3");
@@ -19,13 +29,8 @@ var request = require('superagent');
 Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
 //Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
 
+// should probabl only be doing this in simulation, either delete or figure out a way to check that
 Estimote.addNearableToSimulation("4ba718239b91a8b3", Estimote.ESTNearableTypeFridge, Estimote.ESTNearableZoneImmediate, -22);
-
-var AppRegistry = React.AppRegistry;
-var StyleSheet = React.StyleSheet;
-var Text = React.Text;
-var View = React.View;
-var TouchableHighlight = React.TouchableHighlight;
 
 var fact0ryx_ios = React.createClass({
   didRangeNearables: function(data) {
@@ -45,7 +50,15 @@ var fact0ryx_ios = React.createClass({
         console.log('light ON');
       });
 
+    var notification = {
+      "fireDate": Date.now() + 10000,
+      "alertBody":"didEnterIdentifierRegion"
+    };
+
+    PushNotificationIOS.scheduleLocalNotification(notification);
+
   },
+
   didExitIdentifierRegion: function(data){
 
     console.log("didExitIdentifierRegion", JSON.stringify(data));
@@ -56,6 +69,13 @@ var fact0ryx_ios = React.createClass({
       .end(function(err, res){
         console.log('light OFF');
       });
+
+    var notification = {
+      "fireDate": Date.now() + 10000,
+      "alertBody":"didExitIdentifierRegion"
+    };
+
+    PushNotificationIOS.scheduleLocalNotification(notification);
 
   },
   didEnterTypeRegion: function(data){
