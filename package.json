@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "react-native": "^0.4.4",
-    "react-native-estimote": "^0.0.3"
+    "react-native-estimote": "^0.0.4"
   }
 }
