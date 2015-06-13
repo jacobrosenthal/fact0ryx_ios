@@ -11,6 +11,16 @@ var React = require('react-native');
 var DeviceEventEmitter = React.DeviceEventEmitter;
 var Estimote = require('react-native-estimote');
 
+var AppRegistry = React.AppRegistry;
+var StyleSheet = React.StyleSheet;
+var Text = React.Text;
+var View = React.View;
+var TouchableHighlight = React.TouchableHighlight;
+var PushNotificationIOS = React.PushNotificationIOS;
+
+PushNotificationIOS.requestPermissions();
+
+
 //Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
 //Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
 //Estimote.startRangingForIdentifier("4ba718239b91a8b3");
@@ -18,13 +28,8 @@ var Estimote = require('react-native-estimote');
 Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
 //Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
 
+// should probabl only be doing this in simulation, either delete or figure out a way to check that
 Estimote.addNearableToSimulation("4ba718239b91a8b3", Estimote.ESTNearableTypeFridge, Estimote.ESTNearableZoneImmediate, -22);
-
-var AppRegistry = React.AppRegistry;
-var StyleSheet = React.StyleSheet;
-var Text = React.Text;
-var View = React.View;
-var TouchableHighlight = React.TouchableHighlight;
 
 var fact0ryx_ios = React.createClass({
   didRangeNearables: function(data) {
@@ -36,6 +41,13 @@ var fact0ryx_ios = React.createClass({
   didEnterIdentifierRegion: function(data){
     console.log("didEnterIdentifierRegion", JSON.stringify(data));
 
+    var notification = {
+      "fireDate": Date.now() + 10000,
+      "alertBody":"didEnterIdentifierRegion"
+    };
+
+    PushNotificationIOS.scheduleLocalNotification(notification);
+
     // var hue = new jsHue();
     // var user = hue.bridge('10.1.10.26').user('newdeveloper');
     // user.setLightState(1, { on: true }, function(){
@@ -45,6 +57,13 @@ var fact0ryx_ios = React.createClass({
   },
   didExitIdentifierRegion: function(data){
     console.log("didExitIdentifierRegion", JSON.stringify(data));
+
+    var notification = {
+      "fireDate": Date.now() + 10000,
+      "alertBody":"didExitIdentifierRegion"
+    };
+
+    PushNotificationIOS.scheduleLocalNotification(notification);
 
     // var hue = new jsHue();
     // var user = hue.bridge('10.1.10.26').user('newdeveloper');
