@@ -9,24 +9,14 @@
 
 var React = require('react-native');
 var DeviceEventEmitter = React.DeviceEventEmitter;
+var Estimote = require('react-native-estimote');
 
-var Beacons = require('react-native-ibeacon');
-
-// Define a region which can be identifier + uuid, 
-// identifier + uuid + major or identifier + uuid + major + minor
-// (minor and major properties are numbers)
-var region = {
-    identifier: 'Estimotes',
-    // This uuid only finds original beacons, not new style nearable stickers
-    uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'    
-};
-
-// Request for authorization while the app is open
-Beacons.requestWhenInUseAuthorization();
-
-Beacons.startRangingBeaconsInRegion(region);
-
-Beacons.startUpdatingLocation();
+Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
+Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
+Estimote.startRangingForIdentifier("4ba718239b91a8b3");
+Estimote.startRangingForIdentifier("9580ebcded0938bb");
+Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
+Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
 
 var AppRegistry = React.AppRegistry;
 var StyleSheet = React.StyleSheet;
@@ -34,47 +24,77 @@ var Text = React.Text;
 var View = React.View;
 
 var fact0ryx_ios = React.createClass({
-  listen: function(data) {
-    //sort by minor
-    data.beacons.sort(function(a, b) {
-      if (a.minor < b.minor) {
-        return -1;
-      }
-      if (a.minor > b.minor) {
-        return 1;
-      }
-      return 0;
-    });
-    this.setState({beacons: data.beacons});
+  didRangeNearables: function(data) {
+    this.setState({nearables: data.nearables});
+  },
+  didRangeNearable: function(data) {
+    console.log("didRangeNearable", JSON.stringify(data));
+  },
+  didEnterIdentifierRegion: function(data){
+    console.log("didEnterIdentifierRegion", JSON.stringify(data));
+  },
+  didExitIdentifierRegion: function(data){
+    console.log("didExitIdentifierRegion", JSON.stringify(data));
+  },
+  didEnterTypeRegion: function(data){
+    console.log("didEnterTypeRegion", JSON.stringify(data));
+  },
+  didExitTypeRegion: function(data){
+    console.log("didExitTypeRegion", JSON.stringify(data));
+  },
+  rangingFailedWithError: function(data){
+    console.log("rangingFailedWithError", JSON.stringify(data));
+  },
+  monitoringFailedWithError: function(data){
+    console.log("monitoringFailedWithError", JSON.stringify(data));
   },
   getInitialState: function(){
     return {
-      beacons: []
+      nearables: []
     };
   },
   componentWillMount: function(){
-    // Listen for beacon changes
-    var subscription = DeviceEventEmitter.addListener(
-      'beaconsDidRange', this.listen
+    var didRangeNearables = DeviceEventEmitter.addListener(
+      'didRangeNearables', this.didRangeNearables
+    );
+    var didRangeNearable = DeviceEventEmitter.addListener(
+      'didRangeNearable', this.didRangeNearable
+    );
+    var didEnterIdentifierRegion = DeviceEventEmitter.addListener(
+      'didEnterIdentifierRegion', this.didEnterIdentifierRegion
+    );
+    var didExitIdentifierRegion = DeviceEventEmitter.addListener(
+      'didExitIdentifierRegion', this.didExitIdentifierRegion
+    );
+    var didEnterTypeRegion = DeviceEventEmitter.addListener(
+      'didEnterTypeRegion', this.didEnterTypeRegion
+    );
+    var didExitTypeRegion = DeviceEventEmitter.addListener(
+      'didExitTypeRegion', this.didExitTypeRegion
+    );
+    var rangingFailedWithError = DeviceEventEmitter.addListener(
+      'rangingFailedWithError', this.rangingFailedWithError
+    );
+    var monitoringFailedWithError = DeviceEventEmitter.addListener(
+      'monitoringFailedWithError', this.rangingFailedWithError
     );
   },
   render: function() {
-    var beacons = this.state.beacons.map(function(beacon){
-
-    //    .uuid
-    //    .major - The major version of a beacon
-    //    .minor - The minor version of a beacon
-    //    .rssi - Signal strength: RSSI value (between -100 and 0)
-    //    .proximity - Proximity value, can either be "unknown", "far", "near" or "immediate"
-    //    .accuracy - The accuracy of a beacon
+    var nearables = this.state.nearables.map(function(nearable){
 
     return(
       <View>
         <Text>
-          {beacon.minor}
+          {nearable.identifier}
         </Text>
         <Text>
-          {beacon.proximity}
+          {nearable.type}
+        </Text>
+       <Text>
+          {nearable.zone}
+        </Text>
+       <Text>
+          {nearable.rssi}
         </Text>
       </View>
       );
@@ -83,9 +103,9 @@ var fact0ryx_ios = React.createClass({
     return (
       <View style={styles.container}>
         <Text>
-          Beacons!
+          Nearables!
         </Text>
-        {beacons}
+        {nearables}
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu

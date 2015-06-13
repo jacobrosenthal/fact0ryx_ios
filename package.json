@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "react-native": "^0.4.4",
-    "react-native-ibeacon": "^0.3.1"
+    "react-native-estimote": "^0.0.3"
   }
 }
