@@ -36,23 +36,21 @@ var fact0ryx_ios = React.createClass({
   didEnterIdentifierRegion: function(data){
     console.log("didEnterIdentifierRegion", JSON.stringify(data));
 
-  console.log('bro')
-
-    var hue = new jsHue();
-    var user = hue.bridge('10.1.10.26').user('newdeveloper');
-    user.setLightState(1, { on: true }, function(){
-      console.log('light on');
-    });
+    // var hue = new jsHue();
+    // var user = hue.bridge('10.1.10.26').user('newdeveloper');
+    // user.setLightState(1, { on: true }, function(){
+    //   console.log('light on');
+    // });
 
   },
   didExitIdentifierRegion: function(data){
     console.log("didExitIdentifierRegion", JSON.stringify(data));
 
-    var hue = new jsHue();
-    var user = hue.bridge('10.1.10.26').user('newdeveloper');
-    user.setLightState(1, { on: false }, function(){
-      console.log('light off');
-    });
+    // var hue = new jsHue();
+    // var user = hue.bridge('10.1.10.26').user('newdeveloper');
+    // user.setLightState(1, { on: false }, function(){
+    //   console.log('light off');
+    // });
 
   },
   didEnterTypeRegion: function(data){
