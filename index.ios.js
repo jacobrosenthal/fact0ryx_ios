@@ -13,15 +13,18 @@ var Estimote = require('react-native-estimote');
 
 //Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
 //Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
-Estimote.startRangingForIdentifier("4ba718239b91a8b3");
+//Estimote.startRangingForIdentifier("4ba718239b91a8b3");
 //Estimote.startRangingForIdentifier("9580ebcded0938bb");
-//Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
+Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
 //Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
+
+Estimote.addNearableToSimulation("4ba718239b91a8b3", Estimote.ESTNearableTypeFridge, Estimote.ESTNearableZoneImmediate, -22);
 
 var AppRegistry = React.AppRegistry;
 var StyleSheet = React.StyleSheet;
 var Text = React.Text;
 var View = React.View;
+var TouchableHighlight = React.TouchableHighlight;
 
 var fact0ryx_ios = React.createClass({
   didRangeNearables: function(data) {
@@ -66,8 +69,17 @@ var fact0ryx_ios = React.createClass({
   },
   getInitialState: function(){
     return {
+      enabled: false,
       nearables: []
     };
+  },
+  onPressEnable: function(){
+    this.setState({enabled:true});
+    Estimote.simulateDidEnterRegionForNearable("4ba718239b91a8b3");
+  },
+  onPressDisable: function(){
+    this.setState({enabled:false});
+    Estimote.simulateDidExitRegionForNearable("4ba718239b91a8b3");
   },
   componentWillMount: function(){
     var didRangeNearables = DeviceEventEmitter.addListener(
@@ -126,6 +138,9 @@ var fact0ryx_ios = React.createClass({
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
+        <TouchableHighlight onPress={this.state.enabled ? this.onPressDisable : this.onPressEnable}>
+          <Text>{this.state.enabled ? "Stop" : "Start"}</Text>
+        </TouchableHighlight>
       </View>
     );
   }
