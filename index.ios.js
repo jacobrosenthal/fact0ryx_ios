@@ -11,12 +11,12 @@ var React = require('react-native');
 var DeviceEventEmitter = React.DeviceEventEmitter;
 var Estimote = require('react-native-estimote');
 
-Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
-Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
+//Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
+//Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
 Estimote.startRangingForIdentifier("4ba718239b91a8b3");
-Estimote.startRangingForIdentifier("9580ebcded0938bb");
-Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
-Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
+//Estimote.startRangingForIdentifier("9580ebcded0938bb");
+//Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
+//Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
 
 var AppRegistry = React.AppRegistry;
 var StyleSheet = React.StyleSheet;
@@ -32,9 +32,25 @@ var fact0ryx_ios = React.createClass({
   },
   didEnterIdentifierRegion: function(data){
     console.log("didEnterIdentifierRegion", JSON.stringify(data));
+
+  console.log('bro')
+
+    var hue = new jsHue();
+    var user = hue.bridge('10.1.10.26').user('newdeveloper');
+    user.setLightState(1, { on: true }, function(){
+      console.log('light on');
+    });
+
   },
   didExitIdentifierRegion: function(data){
     console.log("didExitIdentifierRegion", JSON.stringify(data));
+
+    var hue = new jsHue();
+    var user = hue.bridge('10.1.10.26').user('newdeveloper');
+    user.setLightState(1, { on: false }, function(){
+      console.log('light off');
+    });
+
   },
   didEnterTypeRegion: function(data){
     console.log("didEnterTypeRegion", JSON.stringify(data));
