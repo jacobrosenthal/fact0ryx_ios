@@ -56,20 +56,35 @@ var fact0ryx_ios = React.createClass({
         PushNotificationIOS.presentLocalNotification(notification);
       });
   },
+  // gets called for type searches?
   didRangeNearables: function(data) {
+    console.log("didRangeNearables", JSON.stringify(data));
     this.setState({nearables: data.nearables});
   },
+  // called identifier searches
   didRangeNearable: function(data) {
     console.log("didRangeNearable", JSON.stringify(data));
+    // to visualize
+    this.setState({nearables: [data.nearable]});
+
+    // or use the members in some kind of hue call
+    // data.nearable.identifier;
+    // data.nearable.rssi;
+    // data.nearable.zone;
+    // data.nearable.type;
   },
   didEnterIdentifierRegion: function(data){
-    console.log("whahaaaaa");
+    Estimote.startRangingForIdentifier(data.identifier);
     console.log("didEnterIdentifierRegion", JSON.stringify(data));
     this.lightsOn();
   },
   didExitIdentifierRegion: function(data){
-    console.log("noooooooo");
+    Estimote.stopRangingForIdentifier(data.identifier);
     console.log("didExitIdentifierRegion", JSON.stringify(data));
+
+    // could just walk and remove us, but just empty the array
+    this.setState({nearables:[]});
+
     this.lightsOff();
   },
   didEnterTypeRegion: function(data){
@@ -167,10 +182,9 @@ var fact0ryx_ios = React.createClass({
 
 //Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
 //Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
-//Estimote.startRangingForIdentifier("4ba718239b91a8b3");
 //Estimote.startRangingForIdentifier("9580ebcded0938bb");
 Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
-//Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
+// Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
 
 // should probabl only be doing this in simulation, either delete or figure out a way to check that
 // Estimote.addNearableToSimulation("4ba718239b91a8b3", Estimote.ESTNearableTypeFridge, Estimote.ESTNearableZoneImmediate, -22);
