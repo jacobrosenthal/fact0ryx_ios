@@ -6,12 +6,10 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
-    "react-native": "^0.4.4",
-    "react-native-estimote": "^0.0.3"
-  },
-  "devDependencies": {
-    "superagent": "^1.2.0",
     "react-native": "jacobrosenthal/react-native#localnotifications",
     "react-native-estimote": "^0.0.4"
+  },
+  "devDependencies": {
+    "superagent": "^1.2.0"
   }
 }
