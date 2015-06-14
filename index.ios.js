@@ -21,18 +21,41 @@ var PushNotificationIOS = React.PushNotificationIOS;
 
 PushNotificationIOS.requestPermissions();
 
-
-//Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
-//Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
-//Estimote.startRangingForIdentifier("4ba718239b91a8b3");
-//Estimote.startRangingForIdentifier("9580ebcded0938bb");
-Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
-//Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
-
-// should probabl only be doing this in simulation, either delete or figure out a way to check that
-Estimote.addNearableToSimulation("4ba718239b91a8b3", Estimote.ESTNearableTypeFridge, Estimote.ESTNearableZoneImmediate, -22);
-
 var fact0ryx_ios = React.createClass({
+  lightsOn: function(){
+    var self = this;
+    request
+      .put('http://10.1.10.26/api/newdeveloper/lights/1/state')
+      .send({on: true})
+      .end(function(err, res){
+        console.log(err, res);
+        console.log('light ON');
+        self.setState({enabled:true});
+
+        var notification = {
+          "alertBody":"lights on"
+        };
+
+        PushNotificationIOS.presentLocalNotification(notification);
+      });
+  },
+  lightsOff: function(){
+    var self = this;
+    request
+      .put('http://10.1.10.26/api/newdeveloper/lights/1/state')
+      .send({on: false})
+      .end(function(err, res){
+        console.log(err, res);
+        console.log('light OFF');
+        self.setState({enabled:false});
+
+        var notification = {
+          "alertBody":"lights off"
+        };
+
+        PushNotificationIOS.presentLocalNotification(notification);
+      });
+  },
   didRangeNearables: function(data) {
     this.setState({nearables: data.nearables});
   },
@@ -40,43 +63,14 @@ var fact0ryx_ios = React.createClass({
     console.log("didRangeNearable", JSON.stringify(data));
   },
   didEnterIdentifierRegion: function(data){
-
+    console.log("whahaaaaa");
     console.log("didEnterIdentifierRegion", JSON.stringify(data));
-
-    request
-      .post('/10.1.10.26/api/newdeveloper/lights/1/state')
-      .send({on: true})
-      .end(function(err, res){
-        console.log('light ON');
-      });
-
-    var notification = {
-      "fireDate": Date.now() + 10000,
-      "alertBody":"didEnterIdentifierRegion"
-    };
-
-    PushNotificationIOS.scheduleLocalNotification(notification);
-
+    this.lightsOn();
   },
-
   didExitIdentifierRegion: function(data){
-
+    console.log("noooooooo");
     console.log("didExitIdentifierRegion", JSON.stringify(data));
-
-    request
-      .post('/10.1.10.26/api/newdeveloper/lights/1/state')
-      .send({on: false})
-      .end(function(err, res){
-        console.log('light OFF');
-      });
-
-    var notification = {
-      "fireDate": Date.now() + 10000,
-      "alertBody":"didExitIdentifierRegion"
-    };
-
-    PushNotificationIOS.scheduleLocalNotification(notification);
-
+    this.lightsOff();
   },
   didEnterTypeRegion: function(data){
     console.log("didEnterTypeRegion", JSON.stringify(data));
@@ -98,11 +92,13 @@ var fact0ryx_ios = React.createClass({
   },
   onPressEnable: function(){
     this.setState({enabled:true});
-    Estimote.simulateDidEnterRegionForNearable("4ba718239b91a8b3");
+    this.lightsOn();
+    // Estimote.simulateDidEnterRegionForNearable("4ba718239b91a8b3");
   },
   onPressDisable: function(){
     this.setState({enabled:false});
-    Estimote.simulateDidExitRegionForNearable("4ba718239b91a8b3");
+    this.lightsOff();
+    // Estimote.simulateDidExitRegionForNearable("4ba718239b91a8b3");
   },
   componentWillMount: function(){
     var didRangeNearables = DeviceEventEmitter.addListener(
@@ -162,12 +158,23 @@ var fact0ryx_ios = React.createClass({
           Cmd+D or shake for dev menu
         </Text>
         <TouchableHighlight onPress={this.state.enabled ? this.onPressDisable : this.onPressEnable}>
-          <Text>{this.state.enabled ? "Stop" : "Start"}</Text>
+          <Text>{this.state.enabled ? "Turn Off" : "Turn On"}</Text>
         </TouchableHighlight>
       </View>
     );
   }
 });
+
+//Estimote.startRangingForType(Estimote.ESTNearableTypeAll);
+//Estimote.startMonitoringForType(Estimote.ESTNearableTypeAll);
+//Estimote.startRangingForIdentifier("4ba718239b91a8b3");
+//Estimote.startRangingForIdentifier("9580ebcded0938bb");
+Estimote.startMonitoringForIdentifier("4ba718239b91a8b3");
+//Estimote.startMonitoringForIdentifier("9580ebcded0938bb");
+
+// should probabl only be doing this in simulation, either delete or figure out a way to check that
+// Estimote.addNearableToSimulation("4ba718239b91a8b3", Estimote.ESTNearableTypeFridge, Estimote.ESTNearableZoneImmediate, -22);
+
 
 var styles = StyleSheet.create({
   container: {
