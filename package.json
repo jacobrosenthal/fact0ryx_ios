@@ -7,7 +7,8 @@
   },
   "dependencies": {
     "react-native": "jacobrosenthal/react-native#localnotifications",
-    "react-native-estimote": "^0.0.4"
+    "react-native-estimote": "^0.0.4",
+    "react-native-ibeacon": "^0.4.0"
   },
   "devDependencies": {
     "superagent": "^1.2.0"

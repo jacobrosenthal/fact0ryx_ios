@@ -15,6 +15,26 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+  // ask for alert badge and sound notifications
+  if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
+  {
+    [[UIApplication sharedApplication] registerUserNotificationSettings:
+     [UIUserNotificationSettings settingsForTypes:
+      UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+  }
+
+  // a region we were scanning for has appeared, ask to open us
+  if([launchOptions objectForKey:@"UIApplicationLaunchOptionsLocationKey"])
+  {
+    UILocalNotification *notification = [UILocalNotification new];
+    notification.fireDate = [NSDate new];
+    notification.alertBody = @"Your attention please";
+
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+  }
+
+
   NSURL *jsCodeLocation;
 
   /**

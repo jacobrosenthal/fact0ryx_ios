@@ -25,6 +25,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		5B0750521B2CC05B00FB69F4 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B07504B1B2CC05200FB69F4 /* libRCTPushNotification.a */; };
 		5B3D834A1B2BECEE00504A4F /* libRNEstimote.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3D83491B2BECE600504A4F /* libRNEstimote.a */; };
+		5B50F8D01B32023B0025DC43 /* libRNBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B50F8CE1B32022B0025DC43 /* libRNBeacon.a */; };
 		5B88367F1B1E80710008F657 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B88367E1B1E80710008F657 /* CoreBluetooth.framework */; };
 		5B99244B1B2BD71B006D4DDD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B99244A1B2BD71B006D4DDD /* CoreLocation.framework */; };
 		5B99244D1B2BD720006D4DDD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B99244C1B2BD720006D4DDD /* SystemConfiguration.framework */; };
@@ -117,6 +118,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNEstimote;
 		};
+		5B50F8CD1B32022B0025DC43 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B50F8BD1B32022B0025DC43 /* RNBeacon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNBeacon;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -156,6 +164,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		5B0750401B2CC05100FB69F4 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		5B3D83441B2BECE500504A4F /* RNEstimote.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNEstimote.xcodeproj; path = "node_modules/react-native-estimote/RNEstimote.xcodeproj"; sourceTree = "<group>"; };
+		5B50F8BD1B32022B0025DC43 /* RNBeacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBeacon.xcodeproj; path = "node_modules/react-native-ibeacon/RNBeacon.xcodeproj"; sourceTree = "<group>"; };
 		5B88367E1B1E80710008F657 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		5B99244A1B2BD71B006D4DDD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5B99244C1B2BD720006D4DDD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -180,6 +189,7 @@
 				5B99244D1B2BD720006D4DDD /* SystemConfiguration.framework in Frameworks */,
 				5B99244B1B2BD71B006D4DDD /* CoreLocation.framework in Frameworks */,
 				5B88367F1B1E80710008F657 /* CoreBluetooth.framework in Frameworks */,
+				5B50F8D01B32023B0025DC43 /* libRNBeacon.a in Frameworks */,
 				5B0750521B2CC05B00FB69F4 /* libRCTPushNotification.a in Frameworks */,
 				5B3D834A1B2BECEE00504A4F /* libRNEstimote.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -318,6 +328,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		5B50F8BE1B32022B0025DC43 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5B50F8CE1B32022B0025DC43 /* libRNBeacon.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +347,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5B50F8BD1B32022B0025DC43 /* RNBeacon.xcodeproj */,
 				5B0750401B2CC05100FB69F4 /* RCTPushNotification.xcodeproj */,
 				5B3D83441B2BECE500504A4F /* RNEstimote.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -501,6 +520,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 5B50F8BE1B32022B0025DC43 /* Products */;
+					ProjectRef = 5B50F8BD1B32022B0025DC43 /* RNBeacon.xcodeproj */;
+				},
+				{
 					ProductGroup = 5B3D83451B2BECE500504A4F /* Products */;
 					ProjectRef = 5B3D83441B2BECE500504A4F /* RNEstimote.xcodeproj */;
 				},
@@ -589,6 +612,13 @@
 			fileType = archive.ar;
 			path = libRNEstimote.a;
 			remoteRef = 5B3D83481B2BECE600504A4F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5B50F8CE1B32022B0025DC43 /* libRNBeacon.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNBeacon.a;
+			remoteRef = 5B50F8CD1B32022B0025DC43 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {

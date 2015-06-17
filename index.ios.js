@@ -11,6 +11,7 @@ var React = require('react-native');
 var DeviceEventEmitter = React.DeviceEventEmitter;
 var Estimote = require('react-native-estimote');
 var request = require('superagent');
+var Beacons = require('react-native-ibeacon');
 
 var AppRegistry = React.AppRegistry;
 var StyleSheet = React.StyleSheet;
@@ -18,6 +19,18 @@ var Text = React.Text;
 var View = React.View;
 var TouchableHighlight = React.TouchableHighlight;
 var PushNotificationIOS = React.PushNotificationIOS;
+
+// estimote doesnt use the ios apis so it cant wake us if we're killed
+// we wont actually do anything with that data we just want to be woken
+var region = {
+    identifier: 'Fridge',
+    uuid: 'D0D3FA86-CA76-45EC-9BD9-6AF44BA71823'
+};
+
+// Request for always so if app is killed and the os sees our guy we're restarted
+Beacons.requestAlwaysAuthorization();
+Beacons.startMonitoringForRegion(region);
+Beacons.startUpdatingLocation();
 
 PushNotificationIOS.requestPermissions();
 
