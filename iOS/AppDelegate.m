@@ -16,15 +16,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
-  // ask for alert badge and sound notifications
-  if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
-  {
-    [[UIApplication sharedApplication] registerUserNotificationSettings:
-     [UIUserNotificationSettings settingsForTypes:
-      UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
-  }
-
-  // a region we were scanning for has appeared, ask to open us
+  // an ibeacon region we were scanning for has appeared, ask to open us
+  // hopefully goes into rnbeacon https://github.com/facebook/react-native/issues/1660
   if([launchOptions objectForKey:@"UIApplicationLaunchOptionsLocationKey"])
   {
     UILocalNotification *notification = [UILocalNotification new];
